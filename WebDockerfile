@@ -1,0 +1,15 @@
+FROM php:8.2-apache
+
+# Install required extensions
+RUN apt-get update && apt-get install -y \
+    libpq-dev \
+    && docker-php-ext-install pdo pdo_mysql
+
+# Enable Apache mod_rewrite (optional for frameworks like Laravel)
+RUN a2enmod rewrite
+
+# Clean up to reduce image size
+RUN apt-get clean && rm -rf /var/lib/apt/lists/*
+
+# Set working directory
+WORKDIR /var/www/html

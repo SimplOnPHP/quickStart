@@ -1,0 +1,29 @@
+# Docker/OS specific
+.DS_Store
+Thumbs.db
+
+# Database Data - These can get very large and change often.
+# Provide SQL dumps or setup scripts instead.
+# Ignore database files but keep the directory structure via README.md
+/mysql_data/*
+!/mysql_data/README.md
+/mysql_data_linux/*
+!/mysql_data_linux/README.md
+
+# PHP Dependencies managed by Composer
+# Should be installed via 'composer install', not committed.
+#/simplon-php/vendor/
+
+# IDE/Editor configuration
+/.vscode/
+/simplon-php/._git
+/simplon-php/Datas/.vscode/
+/simplon-php/Elements/.vscode/
+
+# Optional: Ignore the 'php' directory if it's truly only for the VSCode extension
+# and not part of the runtime project itself. Uncomment if needed.
+/php/
+
+# Add any other log files, temporary files, build artifacts etc.
+*.log
+temp/

@@ -1,0 +1,116 @@
+version: '3.8'
+
+services:
+  web:
+    container_name: Apache
+    build:
+      context: .
+      dockerfile: WebDockerfile
+    ports:
+      - "80:80"
+    depends_on:
+      - db
+      - qwen
+    volumes:
+      - ./htdocs:/var/www/html
+      - ./simplon-php:/var/www/simplon-php
+    environment:
+      SIMPLONPHP_DIR: /var/www/simplon-php
+      DB_HOST: db
+      DB_USER: root
+      DB_PASS: ''
+    networks:
+     - simplon
+
+  db:
+    container_name: MySql
+    image: mysql:8.1.0
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: 1
+      MYSQL_ROOT_PASSWORD: ''
+      MYSQL_DATABASE: test
+    volumes:
+      - ./mysql_data:/var/lib/mysql
+    networks:
+     - simplon
+
+  phpmyadmin:
+    container_name: phpMyAdmin
+    image: phpmyadmin/phpmyadmin
+    ports:
+      - "8081:80"
+    depends_on:
+      - db
+    environment:
+      PMA_HOST: db
+    networks:
+     - simplon
+
+  qwen:
+    container_name: qwen_api
+    image: ghcr.io/ggerganov/llama.cpp:server
+    command: >
+      --model /models/qwen2.5-coder-14b-instruct-q5_0-00001-of-00002.gguf
+      --host 0.0.0.0 --port 1234 --n-gpu-layers 40
+    ports:
+      - "1234:1234"
+    volumes:
+      - "D:/2 AI/AIModels/Qwen/Qwen2.5-Coder-14B-Instruct-GGUF:/models"
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    networks:
+     - simplon
+
+
+networks:
+  simplon:
+    driver: bridge
+  # ollamaweb:
+  #   container_name: ollamaweb
+  #   image: ollama/ollama
+  #   ports:
+  #     - "11434:11434"
+  #   volumes:
+  #     - ./AIModels:/root/.ollama/models 
+  #   environment:
+  #     - OLLAMA_API_URL=http://ollamaweb:11434
+  #   deploy:
+  #     resources:
+  #       reservations:
+  #         devices:
+  #           - capabilities: [gpu]  
+  #   runtime: nvidia
+  #   networks:
+  #     - simplon
+      
+  # openwebui:
+  #   container_name: openwebui
+  #   image: ghcr.io/open-webui/open-webui:main
+  #   ports:
+  #     - "3000:8080"
+  #   environment:
+  #     - OLLAMA_API_BASE_URL=http://ollamaweb:11434
+  #   depends_on:
+  #     - ollamaweb
+  #   networks:
+  #     - ai_network
+  #   restart: always
+
+
+  # cuda-app:
+  #   image: nvidia/cuda:12.8.0-cudnn-devel-ubuntu22.04
+  #   runtime: nvidia  # Specifies that the container should use the NVIDIA runtime
+  #   environment:
+  #     - NVIDIA_VISIBLE_DEVICES=all  # Specify which GPUs to use, 'all' means all available GPUs
+  #     - NVIDIA_DRIVER_CAPABILITIES=compute,utility  # Defines what GPU features are accessible
+  #   command: nvidia-smi  # Command to run when the container starts (this is just an example)
+  #   deploy:
+  #     resources:
+  #       limits:
+  #         memory: 2GB
+  #         cpus: "1"

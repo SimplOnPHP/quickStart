@@ -1,0 +1,12 @@
+{
+    "folders": [
+        {
+            "path": "."
+        }
+    ],
+    "settings": {
+        "editor.tabCompletion": "on",
+        "editor.acceptSuggestionOnTab": true,
+        "editor.snippetSuggestions": "top"
+    }
+}
