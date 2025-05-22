@@ -1,15 +1,26 @@
-FROM php:8.2-apache
+FROM php:8.2-apache-bookworm
 
 # Install required extensions
-RUN apt-get update && apt-get install -y \
+RUN set -x; \
+    apt-get update && apt-get install -y --no-install-recommends \
+    build-essential \
+    autoconf \
+    automake \
+    libtool \
+    pkg-config \
     libpq-dev \
-    && docker-php-ext-install pdo pdo_mysql
-
+    libsqlite3-dev \
+    libmariadb-dev \
+    && docker-php-source extract \
+    && echo "--- Installing pdo and pdo_mysql ---" \
+    && docker-php-ext-install pdo pdo_mysql \
+    && echo "--- Installing bundled pdo_sqlite (Note: sqlite3 extension sources appear missing in base image) ---" \
+    && docker-php-ext-install pdo_sqlite \
+    && docker-php-source delete \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 # Enable Apache mod_rewrite (optional for frameworks like Laravel)
 RUN a2enmod rewrite
-
-# Clean up to reduce image size
-RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Set working directory
 WORKDIR /var/www/html

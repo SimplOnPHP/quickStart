@@ -14,7 +14,7 @@ https://simplonphp.org/Sow-PeaceLicense.txt
  * @copyright (c) 2011, Rubén Schaffer Levine and Luca Lauretta
  * @category Data
  */
-class SD_Integer extends SD_Data {
+class SD_Integer extends SC_Data {
     /**
      *
      * @var boolean $view,$create,$update and $list - these variables are 
@@ -67,8 +67,8 @@ class SD_Integer extends SD_Data {
     
     public function showInput($fill=true) {
         return 
-        ($this->label() ? '<label for="'.$this->htmlId().'">'.$this->label().': </label>' : '') .
-        '<input id="'.$this->htmlId().'" name="'.$this->inputName().'" '.(($fill)?'value="'.$this->val().'"':'').' type="number" />';
+        ($this->label() ? '<label for="'.$this->InterfaceId().'">'.$this->label().': </label>' : '') .
+        '<input id="'.$this->InterfaceId().'" name="'.$this->inputName().'" '.(($fill)?'value="'.$this->val().'"':'').' type="number" />';
     }
 	
 //	public function validationMessages(){

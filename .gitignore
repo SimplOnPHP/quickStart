@@ -16,9 +16,13 @@ Thumbs.db
 
 # IDE/Editor configuration
 /.vscode/
-/simplon-php/._git
+/simplon-php/_.git
+/htdocs/tutorial/_.git
 /simplon-php/Datas/.vscode/
 /simplon-php/Elements/.vscode/
+/simplon-php/.phpdoc
+/simplon-php/.vscode
+
 
 # Optional: Ignore the 'php' directory if it's truly only for the VSCode extension
 # and not part of the runtime project itself. Uncomment if needed.

@@ -1,5 +1,4 @@
 <?php
-
 /*
 Sow Peace License (MIT-Compatible with Attribution Visit)
 Copyright (c) 2025 Ruben Schaffer Levine and Luca Lauretta
@@ -7,78 +6,34 @@ https://simplonphp.org/Sow-PeaceLicense.txt
 */
 
 /**
- * Object to add Geters, Seters and other desired functionality to all SimplOn objects
+ * Provides base functionality for all SimplOn classes.
  *
- * @author RSL
+ * This class offers common utilities like:
+ * - Retrieving class name information (full name, prefix, words).
+ * - Introspecting methods and attributes.
+ * - Automatic getter and setter generation via the magic __call method for both
+ *   instance and static properties.
+ * - Checking for the existence of attributes and properties.
+ * - Clearing property values.
+ * - Generating unique instance identifiers for UI linking.
+ *
+ * @version 1b.1.0
+ * @package SimplOn\Core
+ * @author Ruben Schaffer
  */
 class SC_BaseObject
 {
 	/**
 	 * Returns the object's class
 	 *
-	 * @return string Class of the object
+	 * @return string The short class name of the object instance.
 	 */
 	public function getClass()
 	{
 		$class = explode('\\',get_class($this));
 		return end($class);
 	}
-	
-	
-	/**
-	 * Returns the object's class without the prefixes AE_, SC_, SE_, SD_, AD_, etc.
-	 *
-	 * @return string Class of the object without the prefixes AE_, SC_, SE_, SD_, AD_, etc.
-	 */
-	public function getClassWords($getPrefix = false)
-	{
-		$words = get_class($this);
-		if(!$getPrefix){$words = substr($words,3);} 
-		$words = preg_replace('/(?<!\ )[A-Z]/', ' $0', $words);
-		return $words;
-	}
 
-	/**
-	 * Returns the object's class  prefixes AE, SC, SE, SD, AD, etc.
-	 *
-	 * @return string Class prefix AE, SC, SE, SD, AD, etc.
-	 */
-	public function getClassPrefix()
-	{
-		return substr( get_class($this),2);
-	}
-
-	/**
-	 * Returns the Methods of the Object
-	 *
-	 * @return array[int]string
-	 */
-	public function getMethods()
-	{
-		$class = get_class($this);
-		return array_merge(get_class_methods($class) , $this->getAttributeKeys());
-	}
-
-	
-	/**
-	 * Returns the Keys of the Object attributes.
-	 *
-	 * @param string $class Filter only attributes instance of $class.
-	 *
-	 * @return array(int => string)
-	 */
-	public function getAttributeKeys($class = null) {
-		$ret = array();
-		foreach($this as $key => $data) {
-			if($class) {
-				if($data instanceof $class)
-					$ret[] = $key;
-			} else {
-				$ret[] = $key;
-			}
-		}
-		return $ret;
-	}
 	
 	/**
 	 * Checks if a an object has a specific method
@@ -89,6 +44,11 @@ class SC_BaseObject
 		return property_exists($this,$attribute);
 	}
 
+	/**
+	 * Checks if a an object has a specific property
+	 *
+	 * @return boolean
+	 */
 	function hasProperty(string $propName): bool {
 		// Get the class name if an object is passed
 		$className =  get_class($this);
@@ -146,6 +106,11 @@ class SC_BaseObject
 		throw new SC_Exception('The method: '.$name.' is not defined in the object: ' . get_class($this));
     }
 
+	/**
+	 * Clears the value of a property or attribute
+	 *
+	 * @param string $name
+	 */
 	public function clear(string $name) {
 		$this->$name = null;
 	}

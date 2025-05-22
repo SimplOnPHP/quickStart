@@ -1,10 +1,5 @@
 <?php
 
-/*
-Sow Peace License (MIT-Compatible with Attribution Visit)
-Copyright (c) 2025 Ruben Schaffer Levine and Luca Lauretta
-https://simplonphp.org/Sow-PeaceLicense.txt
-*/
 SC_Main::$LangArray = [
     'Admin' => 'Administrador',
     'Update' => 'Actualizar',
@@ -278,4 +273,10 @@ SC_Main::$LangArray = [
     'a' => 'a',
     'b' => 'b',
     'Welcome' => 'Welcome',
+    'We\'re sorry, but it looks like you don’t have permission to access this page.
+		If you believe this is an error, please check with your administrator or support team for further assistance.
+		Thank you for your understanding!' => 'We\'re sorry, but it looks like you don’t have permission to access this page.
+		If you believe this is an error, please check with your administrator or support team for further assistance.
+		Thank you for your understanding!',
+    'Concat' => 'Concat',
 ];
