@@ -31,3 +31,4 @@ Thumbs.db
 # Add any other log files, temporary files, build artifacts etc.
 *.log
 temp/
+simplon-php/.gitignore

@@ -46,29 +46,31 @@ services:
     networks:
      - simplon
 
-  qwen:
-    container_name: qwen_api
-    image: ghcr.io/ggerganov/llama.cpp:server
-    command: >
-      --model /models/qwen2.5-coder-14b-instruct-q5_0-00001-of-00002.gguf
-      --host 0.0.0.0 --port 1234 --n-gpu-layers 40
-    ports:
-      - "1234:1234"
-    volumes:
-      - "D:/2 AI/AIModels/Qwen/Qwen2.5-Coder-14B-Instruct-GGUF:/models"
-    deploy:
-      resources:
-        reservations:
-          devices:
-            - driver: nvidia
-              count: all
-              capabilities: [gpu]
-    networks:
-     - simplon
-
-
 networks:
   simplon:
+  
+  
+ # qwen:
+ #   container_name: qwen_api
+ #   image: ghcr.io/ggerganov/llama.cpp:server
+ #   command: >
+ #     --model /models/qwen2.5-coder-14b-instruct-q5_0-00001-of-00002.gguf
+ #     --host 0.0.0.0 --port 1234 --n-gpu-layers 40
+ #   ports:
+ #     - "1234:1234"
+ #   volumes:
+ #     - "D:/2 AI/AIModels/Qwen/Qwen2.5-Coder-14B-Instruct-GGUF:/models"
+ #   deploy:
+ #     resources:
+ #       reservations:
+ #         devices:
+ #           - driver: nvidia
+ #             count: all
+ #             capabilities: [gpu]
+ #   networks:
+ #    - simplon
+  
+  
     driver: bridge
   # ollamaweb:
   #   container_name: ollamaweb
