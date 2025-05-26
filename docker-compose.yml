@@ -10,7 +10,6 @@ services:
       - "80:80"
     depends_on:
       - db
-      - qwen
     volumes:
       - ./htdocs:/var/www/html
       - ./simplon-php:/var/www/simplon-php
@@ -48,6 +47,7 @@ services:
 
 networks:
   simplon:
+    driver: bridge
   
   
  # qwen:
@@ -71,7 +71,6 @@ networks:
  #    - simplon
   
   
-    driver: bridge
   # ollamaweb:
   #   container_name: ollamaweb
   #   image: ollama/ollama
